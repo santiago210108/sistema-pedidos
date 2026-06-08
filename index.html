@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio - Camila Freitas</title>
+    <style>
+        /* Paleta de Cores Permanente - Modo Escuro Premium (Bege e Rosê) */
+        :root {
+            --bg-color: #120A09;          
+            --container-bg: #1C1211;    
+            --primary: #E8C5BF;         
+            --accent: #70463D;          
+            --accent-light: #2D1B19;    
+            --text-dark: #FDF9F8;       
+            --text-light: #D1B1AB;      
+            --border-color: #3D2623;    
+        }
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body { 
+            background-color: var(--bg-color); 
+            color: var(--text-dark); 
+            padding: 25px 12px; 
+        }
+
+        .container { 
+            max-width: 480px; 
+            margin: 0 auto 30px auto; 
+            background: var(--container-bg); 
+            border-radius: 24px; 
+            padding: 20px 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            border: 1px solid var(--border-color);
+        }
+        
+        .logo-container { 
+            text-align: center; 
+            margin-bottom: 25px; 
+            padding: 0 5px;
+        }
+        
+        .site-logo { 
+            max-width: 380px; 
+            width: 100%; 
+            height: auto; 
+            display: inline-block; 
+        }
+        
+        .hidden { display: none !important; }
+        
+        /* Formulários */
+        .form-group { margin-bottom: 20px; padding: 0 5px; }
+        label { 
+            display: block; 
+            font-size: 12px; 
+            margin-bottom: 8px; 
+            color: var(--primary); 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px; 
+        }
+        
+        input[type="text"], input[type="tel"], select { 
+            width: 100%; 
+            padding: 16px; 
+            border: 1px solid var(--border-color); 
+            border-radius: 12px; 
+            background-color: var(--bg-color); 
+            color: var(--text-dark); 
+            font-size: 16px; 
+            outline: none; 
+            transition: border-color 0.2s; 
+            appearance: none; 
+            -webkit-appearance: none;
+        }
+        
+        .select-wrapper {
+            position: relative;
+        }
+        .select-wrapper::after {
+            content: '▼';
+            font-size: 12px;
+            color: var(--primary);
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+        
+        input:focus, select:focus { border-color: var(--primary); }
+        
+        /* Botões */
+        .btn { 
+            width: 100%; 
+            padding: 16px; 
+            border: none; 
+            border-radius: 12px; 
+            font-size: 16px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: opacity 0.2s; 
+        }
+        .btn-primary { background-color: var(--primary); color: var(--bg-color); }
+        
+        .btn-outline { 
+            background-color: transparent; 
+            color: var(--primary); 
+            border: 1px solid var(--border-color);
+            margin-top: 12px;
+        }
+        
+        .btn:active { opacity: 0.8; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        /* Itens do Menu */
+        .item-card { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 18px 5px; 
+            border-bottom: 1px solid var(--border-color); 
+        }
+        .item-info h3 { font-size: 16px; color: var(--text-dark); font-weight: 600; margin-bottom: 4px; }
+        .item-info p { font-size: 13px; color: var(--text-light); padding-right: 10px; }
+        
+        /* Contadores */
+        .counter { display: flex; align-items: center; gap: 14px; }
+        .counter-btn { 
+            width: 38px; 
+            height: 38px; 
+            border: 1px solid var(--border-color); 
+            background: var(--accent-light); 
+            color: var(--primary); 
+            border-radius: 50%; 
+            font-size: 20px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+        .counter-value { font-size: 16px; font-weight: 600; min-width: 20px; text-align: center; }
+        
+        /* Comanda */
+        .comanda-box { 
+            background: var(--accent-light); 
+            padding: 18px; 
+            border-radius: 12px; 
+            margin: 25px 5px 15px 5px; 
+            border: 1px dashed var(--border-color); 
+        }
+        .comanda-title { font-size: 13px; font-weight: bold; color: var(--primary); margin-bottom: 12px; text-transform: uppercase; }
+        .comanda-item { font-size: 14px; margin-bottom: 6px; display: flex; justify-content: space-between; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Logomarca Oficial Escura Fixa -->
+    <div class="logo-container">
+        <img id="site-logo" src="logocamilablack.png" class="site-logo" alt="Logo Camila Freitas">
+    </div>
+
+    <!-- TELA 1: CADASTRO -->
+    <div id="step-cadastro">
+        <p style="margin-bottom: 25px; font-size: 14px; text-align: center; line-height: 1.5; color: var(--text-light); padding: 0 5px;">Seja bem-vinda! Por favor, identifique-se para visualizar nosso cardápio de mimos.</p>
+        <div class="form-group">
+            <label for="nome">Nome Completo</label>
+            <input type="text" id="nome" placeholder="Ex: Maria Silva">
+        </div>
+        <div class="form-group">
+            <label for="telefone">WhatsApp</label>
+            <input type="tel" id="telefone" placeholder="Ex: (85) 99999-0000">
+        </div>
+        <div class="form-group">
+            <label for="localizacao">Onde você está?</label>
+            <div class="select-wrapper">
+                <select id="localizacao">
+                    <option value="" disabled selected>Selecione uma opção...</option>
+                    <option value="Salão">No Salão</option>
+                    <option value="Manicure">Na Manicure</option>
+                </select>
+            </div>
+        </div>
+        <div style="padding: 0 5px;">
+            <button class="btn btn-primary" onclick="salvarCadastro()">Acessar Menu</button>
+        </div>
+    </div>
+
+    <!-- TELA 2: CARDÁPIO -->
+    <div id="step-cardapio" class="hidden">
+        <p style="margin-bottom: 20px; font-size: 15px; padding: 0 5px;">Olá, <strong id="label-cliente" style="color: var(--primary);"></strong>! Monte seu pedido:</p>
+        <div id="lista-produtos"></div>
+        
+        <div id="comanda-container" class="comanda-box hidden">
+            <div class="comanda-title">Sua Seleção</div>
+            <div id="comanda-itens"></div>
+        </div>
+        <div style="padding: 0 5px;">
+            <button id="btn-enviar" class="btn btn-primary" style="margin-top: 20px;" onclick="enviarPedido()">Confirmar Escolhas</button>
+            <button class="btn btn-outline" onclick="cancelarPedido()">Cancelar Seleção</button>
+        </div>
+    </div>
+    
+    <!-- TELA 3: SUCESSO -->
+    <div id="step-sucesso" class="hidden" style="text-align: center; padding: 30px 0;">
+        <span style="font-size: 55px; color: var(--primary);">✔</span>
+        <h2 style="color: var(--primary); margin: 15px 0 10px 0;">Pedido Registrado!</h2>
+        <p style="font-size: 14px; color: var(--text-light); margin-bottom: 25px;">Seus mimos foram enviados para a nossa equipe e já estão sendo preparados.</p>
+        <div style="padding: 0 5px;">
+            <button class="btn btn-primary" onclick="retornarAoInicio()">Fazer Novo Pedido</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxsbANWrAt6851QGD1xNQFIcuF9YAdQC3t9sQyJPZ5dLFgCpW1Jnv9cl5_nyd-6WUTdzg/exec";
+
+
+    // Adicionado Soda Italiana e mantido os outros conforme pedidos
+    const produtos = [
+        { id: 'cafe', nome: 'Café Expresso', desc: 'Quentinho e moído na hora' },
+        { id: 'capuccino', nome: 'Cappuccino Cremoso', desc: 'Com espuma densa e cacau' },
+        { id: 'soda', nome: 'Soda Italiana', desc: 'Refrescante e saborosa' },
+        { id: 'agua', nome: 'Água Mineral', desc: 'Opções com ou sem gás' },
+        { id: 'biscoito', nome: 'Biscoito', desc: 'Perfeito para acompanhar o seu momento' },
+        { id: 'bolacha', nome: 'Bolacha', desc: 'Crocante e saborosa na medida certa' }
+    ];
+
+    let cliente = { nome: "", telefone: "", localizacao: "" };
+    let quantidades = {};
+    produtos.forEach(p => quantidades[p.id] = 0);
+
+    function renderCardapio() {
+        const lista = document.getElementById('lista-produtos');
+        lista.innerHTML = '';
+        produtos.forEach(p => {
+            lista.innerHTML += `
+                <div class="item-card">
+                    <div class="item-info">
+                        <h3>${p.nome}</h3>
+                        <p>${p.desc}</p>
+                    </div>
+                    <div class="counter">
+                        <button class="counter-btn" onclick="alterarQtd('${p.id}', -1)">-</button>
+                        <span class="counter-value" id="qtd-${p.id}">${quantidades[p.id]}</span>
+                        <button class="counter-btn" onclick="alterarQtd('${p.id}', 1)">+</button>
+                    </div>
+                </div>`;
+        });
+    }
+
+    function salvarCadastro() {
+        const nomeVal = document.getElementById('nome').value.trim();
+        const telVal = document.getElementById('telefone').value.trim();
+        const locVal = document.getElementById('localizacao').value;
+
+        if (!nomeVal || !telVal || !locVal) {
+            alert("Por favor, preencha todos os campos e selecione onde você está!");
+            return;
+        }
+
+        cliente.nome = nomeVal;
+        cliente.telefone = telVal;
+        cliente.localizacao = locVal;
+        
+        document.getElementById('label-cliente').innerText = cliente.nome;
+        document.getElementById('step-cadastro').classList.add('hidden');
+        document.getElementById('step-cardapio').classList.remove('hidden');
+        renderCardapio();
+    }
+
+    function alterarQtd(id, delta) {
+        let novaQtd = quantidades[id] + delta;
+        if (novaQtd < 0) novaQtd = 0;
+        quantidades[id] = novaQtd;
+        document.getElementById(`qtd-${id}`).innerText = novaQtd;
+        atualizarComanda();
+    }
+
+    function atualizarComanda() {
+        const container = document.getElementById('comanda-container');
+        const itensDiv = document.getElementById('comanda-itens');
+        itensDiv.innerHTML = '';
+        let temItens = false;
+        
+        produtos.forEach(p => {
+            if (quantidades[p.id] > 0) {
+                temItens = true;
+                itensDiv.innerHTML += `<div class="comanda-item"><span>• ${quantidades[p.id]}x ${p.nome}</span></div>`;
+            }
+        });
+        if (temItens) container.classList.remove('hidden');
+        else container.classList.add('hidden');
+    }
+
+    function cancelarPedido() {
+        if(confirm("Tem certeza que deseja cancelar sua seleção atual?")) {
+            zerarDadosESite();
+        }
+    }
+
+    function retornarAoInicio() {
+        zerarDadosESite();
+    }
+
+    function zerarDadosESite() {
+        produtos.forEach(p => quantidades[p.id] = 0);
+        
+        document.getElementById('nome').value = "";
+        document.getElementById('telefone').value = "";
+        document.getElementById('localizacao').selectedIndex = 0;
+        
+        const btn = document.getElementById('btn-enviar');
+        btn.disabled = false;
+        btn.innerText = "Confirmar Escolhas";
+        
+        document.getElementById('comanda-container').classList.add('hidden');
+        
+        document.getElementById('step-cardapio').classList.add('hidden');
+        document.getElementById('step-sucesso').classList.add('hidden');
+        document.getElementById('step-cadastro').classList.remove('hidden');
+    }
+
+    function enviarPedido() {
+        let itensPedido = [];
+        produtos.forEach(p => {
+            if (quantidades[p.id] > 0) {
+                itensPedido.push(`${quantidades[p.id]}x ${p.nome}`);
+            }
+        });
+
+        if (itensPedido.length === 0) {
+            alert("Por favor, selecione ao menos um item antes de enviar!");
+            return;
+        }
+
+        const btn = document.getElementById('btn-enviar');
+        btn.disabled = true;
+        btn.innerText = "Enviando mimos...";
+
+        const dadosParaEnviar = { 
+            nome: cliente.nome, 
+            telefone: cliente.telefone,
+            localizacao: cliente.localizacao,
+            pedido: itensPedido.join(', ') 
+        };
+
+        fetch(WEB_APP_URL, {
+            method: 'POST',
+            mode: 'no-cors', 
+            cache: 'no-cache',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dadosParaEnviar)
+        })
+        .then(() => {
+            document.getElementById('step-cardapio').classList.add('hidden');
+            document.getElementById('step-sucesso').classList.remove('hidden');
+        })
+        .catch((error) => {
+            console.error("Erro:", error);
+            alert("Ocorreu um erro ao salvar os dados. Verifique sua conexão.");
+            btn.disabled = false;
+            btn.innerText = "Confirmar Escolhas";
+        });
+    }
+</script>
+</body>
+</html>
